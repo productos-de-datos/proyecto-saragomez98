@@ -12,8 +12,19 @@ def compute_monthly_prices():
 
 
     """
-    raise NotImplementedError("Implementar esta función")
+   # raise NotImplementedError("Implementar esta función")
 
+import pandas as pd
+
+    
+    data = pd.read_csv("data_lake/cleansed/precios-horarios.csv")
+    data["Fecha"] = pd.to_datetime(data["Fecha"])
+
+    
+    data = data.set_index("Fecha").resample("M")["Precio"].mean()
+
+    
+    data.to_csv("data_lake/business/precios-mensuales.csv", index=True)
 
 if __name__ == "__main__":
     import doctest
