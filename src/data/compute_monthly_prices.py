@@ -13,25 +13,32 @@ def compute_monthly_prices():
 
     """
    # raise NotImplementedError("Implementar esta función")
-
     import pandas as pd
-    import os
 
-    path_origin = 'data_lake/cleansed/precios-horarios.csv'
-    final_path = 'data_lake/business/'
+    #Leemos el archivo de datos limpios
+    data = pd.read_csv("data_lake/cleansed/precios-horarios.csv")
+
+    data["fecha"] = pd.to_datetime(data["fecha"])
+
+    #Realizamos la agrupacion por fecha, mes y sacamos la media 
+    data = data.set_index("fecha").resample("M")["precio"].mean()
+
+    data.to_csv("data_lake/business/precios-mensuales.csv", index=True)
+
     
-    day_prices = pd.read_csv('data_lake/cleansed/precios-horarios.csv', index_col=None, header=0)
-    day_prices = day_prices[['Fecha', 'Precio']]
-    day_prices['Fecha'] = pd.to_datetime(day_prices['Fecha'])
-    day_prices['Firstday']= day_prices['Fecha'].to_numpy().astype('datetime64[M]')
-    day_prices = day_prices[['Firstday', 'Precio']]
-    monthly_ave_prices = day_prices.groupby('Firstday', as_index=False).mean({'Precio': 'Precio'})
-    monthly_ave_prices.to_csv( final_path + 'precios-mensuales' + '.csv', index=None, header= True)
-    
+
+### TEST ###
+#los datos van desde el mes 7 de 1995, hasta el mes 4 de 2021 para un equivalente a 310 meses por lo
+#cual si se saco el promedio mensual, deben haber 310 registros.
+def test_cantidad_meses():
+    import pandas as pd
+    data = pd.read_csv("data_lake/business/precios-mensuales.csv")
+    assert len(data) == 310
+
 
 if __name__ == "__main__":
-
-    compute_monthly_prices()
     import doctest
 
     doctest.testmod()
+    compute_monthly_prices()
+
