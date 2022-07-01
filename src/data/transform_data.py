@@ -7,7 +7,6 @@ def transform_data():
     """
 
     import pandas as pd
-    import xlwt
     import os
 
     #Creamos una lista para el encabezado de los archivos transformados 
