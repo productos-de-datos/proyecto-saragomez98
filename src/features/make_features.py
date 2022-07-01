@@ -17,10 +17,10 @@ import pandas as pd
     import os
     import shutil
 
-    # print(os.getcwd())
+    
     os.chdir("./")
 
-    # Se copia el archivo de business a la carpeta features
+    
     shutil.copy(
         "data_lake/business/precios-diarios.csv",
         "data_lake/business/features/precios-diarios.csv",
