@@ -1,13 +1,12 @@
 def transform_data():
     """Transforme los archivos xls a csv.
-
     Transforme los archivos data_lake/landing/*.xls a data_lake/raw/*.csv. Hay
     un archivo CSV por cada archivo XLS en la capa landing. Cada archivo CSV
     tiene como columnas la fecha en formato YYYY-MM-DD y las horas H00, ...,
     H23.
-
     """
-   import pandas as pd
+
+    import pandas as pd
 
     #Creamos una lista para el encabezado de los archivos transformados 
     encabezado = ['Fecha', 'H00', 'H01', 'H02', 'H03', 'H04', 'H05', 'H06', 'H07', 'H08', 'H09', 'H10', 'H11', 'H12', 'H13', 'H14', 'H15', 'H16', 'H17', 'H18', 'H19', 'H20', 'H21', 'H22', 'H23']
@@ -45,4 +44,3 @@ if __name__ == "__main__":
 
     doctest.testmod()
     transform_data()
-
