@@ -14,20 +14,22 @@ def compute_daily_prices():
     """
    # raise NotImplementedError("Implementar esta función")
 
-from email import header
 import pandas as pd
-final_path = 'data_lake/business/'
 
-file = pd.read_csv('data_lake/cleansed/precios-horarios.csv', index_col=None, header=0)
-file = file[['Fecha', 'Precio']]
-file['Fecha'] = pd.to_datetime(file['Fecha'])
-daily_ave_prices = file.groupby('Fecha', as_index=False).mean({'Precio': 'Precio'})
+    #Leemos la data limpia 
+    df = pd.read_csv("data_lake/cleansed/precios-horarios.csv", index_col=None, header=0)
+    #Le damos los titulos a las columnas del dataframe segun lo solicitado
+    df = df[["fecha", "precio"]]
+    df["fecha"] = pd.to_datetime(df["fecha"])
+    #Agrupamos por fecha y sacamos la media al precio
+    compute_daily_prices = df.groupby("fecha").mean({"precio": "precio"})
+    compute_daily_prices.reset_index(inplace=True)
+    compute_daily_prices.to_csv("data_lake/business/precios-diarios.csv", index=None, header=True)
 
-daily_ave_prices.to_csv( final_path + 'precios-diarios' + '.csv', index=None, header= True)
+
 
 if __name__ == "__main__":
     import doctest
 
-    compute_daily_prices()
-
     doctest.testmod()
+    compute_daily_prices()
