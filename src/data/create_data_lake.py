@@ -21,7 +21,27 @@ def create_data_lake():
 
 
     """
-    raise NotImplementedError("Implementar esta función")
+   # raise NotImplementedError("Implementar esta función")
+import os
+
+   
+    data_lake = [
+        "landing",
+        "raw",
+        "cleansed",
+        "business",
+        "business/reports",
+        "business/reports/figures",
+        "business/features",
+        "business/forecasts",
+    ]
+
+    
+    os.mkdir("data_lake")
+
+    
+    for folder in data_lake:
+        os.mkdir(os.path.join("data_lake", folder))
 
 
 if __name__ == "__main__":
