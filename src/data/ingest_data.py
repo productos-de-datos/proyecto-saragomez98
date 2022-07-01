@@ -14,21 +14,26 @@ def ingest_data():
     """
 #    raise NotImplementedError("Implementar esta función")
 
-import requests
+import os
+import pandas as pd
+import xlwt
 
-    
-    #Ciclo for para recorrer el numero de años (archivos a descargar) segun su extension 
-    for num in range(1995, 2022):
-        if num in range(2016, 2018):
-            url = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xls?raw=true'.format(num)
-            file = requests.get(url, allow_redirects=True)
-            open('data_lake/landing/{}.xls'.format(num), 'wb').write(file.content)
-        else:
-            url = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xlsx?raw=true'.format(num)
-            file = requests.get(url, allow_redirects=True)
-            open('data_lake/landing/{}.xlsx'.format(num), 'wb').write(file.content)
-            
+start = 1995
+end = 2022
+repo_path = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls'
+final_path = 'data_lake/landing/'
+
+for year_to_download in range (start, end):
+    try: 
+        files = pd.read_excel(repo_path + '/' + str(year_to_download) + '.xlsx?raw=true')
+        files.to_excel(final_path + str(year_to_download) + '.xlsx', index=None, header=True)
+    except:
+        files = pd.read_excel(repo_path + '/' + str(year_to_download) + '.xls?raw=true')
+        files.to_excel(final_path + str(year_to_download) + '.xls', index=None, header=True)
+
 if __name__ == "__main__":
+
+    ingest_data()
     import doctest
 
     doctest.testmod()
