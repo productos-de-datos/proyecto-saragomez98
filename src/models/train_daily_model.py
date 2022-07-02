@@ -1,11 +1,3 @@
-
-    """Entrena el modelo de pronóstico de precios diarios.
-
-    Con las features entrene el modelo de proóstico de precios diarios y
-    salvelo en models/precios-diarios.pkl
-
-
-    """
  #Creamos funcion para importar datos y acomodarlos
 def load_data():
 
